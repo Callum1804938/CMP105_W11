@@ -31,13 +31,13 @@ private:
 
 	//Game Variables
 	GameObject background;
-
+	GameObject butterfly;
 	sf::Texture texture;
-
+	sf::Texture texture2;
 
 	//Game objects
 
-	sf::CircleShape butterfly;
+
 	
 	sf::RectangleShape obsticle;
 	float speed;

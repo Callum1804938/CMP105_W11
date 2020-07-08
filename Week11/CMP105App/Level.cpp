@@ -16,14 +16,16 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "could not load background file.";
 	}
 	background.setTexture(&texture);
-	background.setSize(sf::Vector2f(window->getSize().x,window->getSize().y));
+
 	background.setPosition(0, 0);
 
 
 	//butterfly object
-	butterfly.setRadius(15);
-	butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 2) - 30);
-	butterfly.setFillColor(sf::Color::Yellow);
+	if (!texture2.loadFromFile("butterfly/butterfly single sprite.png"))
+	{ 
+		std::cout << "butterfly single sprite did not load.";
+	}
+	butterfly.setTexture(&texture2);
 
 	
 
@@ -84,6 +86,7 @@ void Level::update(float dt)
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	//butterfly
 		butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 2) - 30);
+		butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
 	//obsticles
 
 
