@@ -7,6 +7,7 @@
 #include "Framework/GameObject.h"
 #include <string>
 #include <iostream>
+#include "Butterfly.h"
 
 
 class Level{
@@ -28,17 +29,18 @@ private:
 	Input* input;
 	GameState* gameState;
 	AudioManager* audio;
+	//*****************************************************************************************
+
 
 	//Game Variables
 	GameObject background;
-	GameObject butterfly;
-	sf::Texture texture;
-	sf::Texture texture2;
+	sf::Texture backgroundTexture;
+
+	Butterfly butterfly;
+	sf::Texture butterflyTexture;
 
 	//Game objects
 
-
-	
 	sf::RectangleShape obsticle;
 	float speed;
 	

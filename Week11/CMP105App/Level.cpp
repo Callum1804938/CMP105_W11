@@ -11,23 +11,25 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	audio->addMusic("sfx/cantina.ogg", "cantina");
 
 	//adding background
-	if (!texture.loadFromFile("background/pixelbackground.jpg"))
+	if (!backgroundTexture.loadFromFile("background/pixelbackground.jpg"))
 	{
 		std::cout << "could not load background file.";
 	}
-	background.setTexture(&texture);
+	background.setTexture(&backgroundTexture);
 
 	background.setPosition(0, 0);
 
 
-	//butterfly object
-	if (!texture2.loadFromFile("butterfly/butterfly single sprite.png"))
-	{ 
-		std::cout << "butterfly single sprite did not load.";
+	//Butterfly Object
+	if (!butterflyTexture.loadFromFile("butterfly/butterfly side sprite strip.png"))
+	{
+		std::cout << "butterfly sprite sheet failed to load.";
 	}
-	butterfly.setTexture(&texture2);
-
 	
+	butterfly.setSize(sf::Vector2f(70, 58));
+	butterfly.setPosition(100, 100);
+	butterfly.setTexture(&butterflyTexture);
+
 
 	//Obsticle object
 	obsticle.setSize(sf::Vector2f(50, 300));
@@ -85,8 +87,9 @@ void Level::update(float dt)
 	//background
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	//butterfly
-		butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 2) - 30);
-		butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
+	butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 3));
+	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
+	butterfly.update(dt);
 	//obsticles
 
 
