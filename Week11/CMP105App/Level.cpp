@@ -25,7 +25,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "butterfly sprite sheet failed to load.";
 	}
 	butterfly.setSize(sf::Vector2f(70, 58));
-	butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 3));
+	butterfly.setPosition((window->getSize().x / 4) - 35, (window->getSize().y / 3));
 	butterfly.setTexture(&butterflyTexture);
 	butterfly.setVelocity(10.f, 10.f);
 	butterfly.setInput(input);
@@ -57,8 +57,12 @@ void Level::handleInput(float dt)
 {
 
 	butterfly.handleInput(dt);
-	
 
+	//input to close window 
+	if (input->isKeyDown(sf::Keyboard::Escape))
+	{
+		window->close();
+	}
 
 }
 

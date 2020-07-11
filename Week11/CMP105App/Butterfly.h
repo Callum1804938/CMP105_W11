@@ -21,6 +21,15 @@ public:
 
 protected:
 
+	float scale;
+	bool isJumping;
+	sf::Vector2f gravity;
+	sf::Vector2f stepVelocity;
+	sf::Vector2f jumpVector;
+
+
+
+
 	Animation glide;
 	Animation flap;
 	Animation* currentAnimation;
