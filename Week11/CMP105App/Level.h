@@ -31,8 +31,10 @@ private:
 	AudioManager* audio;
 	//*****************************************************************************************
 
+	//View
+	
 
-	//Game Variables
+	//Added Game Variables
 	GameObject background;
 	sf::Texture backgroundTexture;
 
@@ -41,8 +43,7 @@ private:
 
 	//Game objects
 
-	sf::RectangleShape obsticle;
-	float speed;
+
 	
 	sf::Text game_title;
 	sf::Font font;

@@ -16,7 +16,6 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "could not load background file.";
 	}
 	background.setTexture(&backgroundTexture);
-
 	background.setPosition(0, 0);
 
 
@@ -25,18 +24,13 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	{
 		std::cout << "butterfly sprite sheet failed to load.";
 	}
-	
 	butterfly.setSize(sf::Vector2f(70, 58));
-	butterfly.setPosition(100, 100);
+	butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 3));
 	butterfly.setTexture(&butterflyTexture);
+	butterfly.setVelocity(10.f, 10.f);
+	butterfly.setInput(input);
 
 
-	//Obsticle object
-	obsticle.setSize(sf::Vector2f(50, 300));
-	obsticle.setPosition(1180,375);
-	obsticle.setFillColor(sf::Color::Green);
-	
-	speed = 80.f;
 	
 	//Game title
 	if (!font.loadFromFile("font/arial.ttf"))
@@ -61,22 +55,11 @@ Level::~Level()
 // handle user input
 void Level::handleInput(float dt)
 {
-	//if space is pressed output to console
-	if (input->isKeyDown(sf::Keyboard::Space))
-	{
-		input->setKeyUp(sf::Keyboard::Space);
-		std::cout << "Spacebar was pressed" << std::endl << std::endl;
-	}
-	if (input->isKeyDown(sf::Keyboard::Enter))
-	{
-		input->setKeyUp(sf::Keyboard::Enter);
-		std::cout << "Enter was pressed" << std::endl << std::endl;
-	}
-	if (input->isKeyDown(sf::Keyboard::Escape))
-	{
-		input->setKeyUp(sf::Keyboard::Escape);
-		window->close();
-	}
+
+	butterfly.handleInput(dt);
+	
+
+
 }
 
 // Update game objects
@@ -87,7 +70,7 @@ void Level::update(float dt)
 	//background
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 	//butterfly
-	butterfly.setPosition((window->getSize().x / 4) - 30, (window->getSize().y / 3));
+	
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
 	butterfly.update(dt);
 	//obsticles
@@ -95,7 +78,7 @@ void Level::update(float dt)
 
 
 	
-	obsticle.move(-speed * dt, 0);
+
 }
 
 // Render level
@@ -106,7 +89,7 @@ void Level::render()
 	
 	window->draw(background);
 	window->draw(butterfly);
-	window->draw(obsticle);
+	
 	window->draw(game_title);
 	endDraw();
 }
