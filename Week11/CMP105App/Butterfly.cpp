@@ -28,10 +28,13 @@ Butterfly::Butterfly()
 	currentAnimation = &glide;
 	setTextureRect(currentAnimation->getCurrentFrame());
 
-	//Gravity stuff
+	//scale for the gravity 
 	scale = 100.0f;
+	//creating gravity 
 	gravity = sf::Vector2f(0, 9.8f) * scale;
+	//scale for the jump
 	jumpVector = sf::Vector2f(0, -3.0f) * scale;
+	//by default butterfly is not flapping
 	isJumping = false;
 
 
@@ -47,6 +50,7 @@ void Butterfly::handleInput(float dt)
 	{
 		if (!isJumping)
 		{
+			//when space is pressed replaces gravity value with jump value
 			stepVelocity = jumpVector;
 			   
 		}
@@ -56,16 +60,14 @@ void Butterfly::handleInput(float dt)
 
 void Butterfly::update(float dt)
 {
-	//all gravity stuff
+	//******All gravity stuff******
 
-		//Apply gravity force, increasing velocity
-	//Move shape by new velocity
-
+	//Apply gravity force, increasing velocity
 	stepVelocity += gravity * dt;
 	sf::Vector2f pos = stepVelocity * dt + 0.5f * gravity * dt * dt;
 	setPosition(getPosition() + pos);
 
-	//Setting borders for butterfly 
+	//******Setting borders for butterfly****** 
 	if (getPosition().y < -30)
 	{
 		
@@ -81,7 +83,7 @@ void Butterfly::update(float dt)
 
 	}
 
-	//Setting animation to keyboard input
+	//******Setting animation to keyboard input******
 	currentAnimation->animate(dt);
 	setTextureRect(currentAnimation->getCurrentFrame());
 

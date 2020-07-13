@@ -20,7 +20,7 @@ public:
 	//sf::RenderWindow* window;
 
 protected:
-
+	
 	float scale;
 	bool isJumping;
 	sf::Vector2f gravity;

@@ -27,7 +27,6 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	
 	butterfly.setPosition((window->getSize().x / 4) - 35, (window->getSize().y / 3));
 	butterfly.setTexture(&butterflyTexture);
-	butterfly.setVelocity(0, 10.f);
 	butterfly.setInput(input);
 
 	//Obsticles
@@ -39,17 +38,19 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	net1.setPosition((window->getSize().x) + 65, 300);
 	
 	net2.setTexture(&netTexture);
-	net2.setPosition((window->getSize().x) + 435, 50);
+	net2.setPosition((window->getSize().x) + 315, 50);
 
 	net3.setTexture(&netTexture);
-	net3.setPosition((window->getSize().x) + 810, 350);
+	net3.setPosition((window->getSize().x) + 540, 200);
 
 	net4.setTexture(&netTexture);
-	net4.setPosition((window->getSize().x) + 1185, 550);
+	net4.setPosition((window->getSize().x) + 785, 500);
 
-	speed = 100.f;
-	
+	net5.setTexture(&netTexture);
+	net5.setPosition((window->getSize().x) + 1020, 100);
 
+	net6.setTexture(&netTexture);
+	net6.setPosition((window->getSize().x) + 1255, 400);
 
 
 	//Loading Font file
@@ -64,8 +65,8 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	game_title.setFillColor(sf::Color::Black);
 	game_title.setStyle(sf::Text::Bold);
 	game_title.setPosition(0, 0);
+	
 	//Instructions
-
 	instructions.setFont(font);
 	instructions.setString("Press Enter to flap\nAvoid those nets!");
 	instructions.setCharacterSize(20);
@@ -84,7 +85,6 @@ Level::~Level()
 // handle user input
 void Level::handleInput(float dt)
 {
-
 	butterfly.handleInput(dt);
 
 	//input to close window 
@@ -92,7 +92,6 @@ void Level::handleInput(float dt)
 	{
 		window->close();
 	}
-	//check for focus
 
 }
 
@@ -108,14 +107,54 @@ void Level::update(float dt)
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
 	butterfly.update(dt);
 	//obsticles
+	
+	speed = 500.f;
 	net1.move(-speed * dt, 0);
 	net2.move(-speed * dt, 0);
 	net3.move(-speed * dt, 0);
 	net4.move(-speed * dt, 0);
+	net5.move(-speed * dt, 0);
+	net6.move(-speed * dt, 0);
 	net1.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net2.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net3.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net4.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	net5.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	net6.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	//ceating random numbwer bwtewwn y axis boundaries to randomise the position of the different nets
+	//srand(time(NULL));
+	randYPos = rand() % (window->getSize().y - 170) + 30;
+
+	if (net1.getPosition().x < -160)
+	{
+		net1.setPosition(window->getSize().x + 65, randYPos);
+	}
+	if (net2.getPosition().x < -160)
+	{
+		net2.setPosition(window->getSize().x + 65, randYPos);
+	}
+	if (net3.getPosition().x < -160)
+	{
+		net3.setPosition(window->getSize().x + 65, randYPos);
+	}
+	if (net4.getPosition().x < -160)
+	{
+		net4.setPosition(window->getSize().x + 65, randYPos);
+	}
+	if (net5.getPosition().x < -160)
+	{
+		net5.setPosition(window->getSize().x + 65, randYPos);
+	}
+	if (net6.getPosition().x < -160)
+	{
+		net6.setPosition(window->getSize().x + 65, randYPos);
+	}
+
+
+
+
+
+
 
 }
 
@@ -133,6 +172,8 @@ void Level::render()
 	window->draw(net2);
 	window->draw(net3);
 	window->draw(net4);
+	window->draw(net5);
+	window->draw(net6);
 
 	window->draw(game_title);
 

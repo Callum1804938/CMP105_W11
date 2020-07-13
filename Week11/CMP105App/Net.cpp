@@ -3,14 +3,13 @@
 Net::Net()
 {
 
-
 }
 Net::~Net()
 {
 
 }
 
-void Net::update(float dt)
+void Net::netUpdate(float dt)
 {
 
 

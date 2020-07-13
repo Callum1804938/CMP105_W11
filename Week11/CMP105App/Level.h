@@ -9,7 +9,11 @@
 #include <string>
 #include <iostream>
 #include "Butterfly.h"
+#include "Net.h"
 
+#include <stdio.h>
+#include <stdlib.h>
+#include <time.h>
 
 class Level{
 public:
@@ -46,9 +50,11 @@ private:
 	GameObject net2;
 	GameObject net3;
 	GameObject net4;
+	GameObject net5;
+	GameObject net6;
 	sf::Texture netTexture;
 	float speed;
-
+	int randYPos;
 	//Game objects
 
 	sf::Text game_title;
