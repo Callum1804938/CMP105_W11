@@ -5,6 +5,7 @@
 #include "Framework/AudioManager.h"
 #include "Framework/GameState.h"
 #include "Framework/GameObject.h"
+#include "Framework/Vector.h"
 #include <string>
 #include <iostream>
 #include "Butterfly.h"
@@ -31,20 +32,27 @@ private:
 	AudioManager* audio;
 	//*****************************************************************************************
 
-	//View
+	
 	
 
-	//Added Game Variables
+	//Added Game assets
 	GameObject background;
 	sf::Texture backgroundTexture;
 
 	Butterfly butterfly;
 	sf::Texture butterflyTexture;
 
+	GameObject net1;
+	GameObject net2;
+	GameObject net3;
+	GameObject net4;
+	sf::Texture netTexture;
+	float speed;
+
 	//Game objects
 
-
-	
 	sf::Text game_title;
+	sf::Text instructions;
+	sf::Text score;
 	sf::Font font;
 };

@@ -10,7 +10,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	// initialise game objects
 	audio->addMusic("sfx/cantina.ogg", "cantina");
 
-	//adding background
+	//Adding background
 	if (!backgroundTexture.loadFromFile("background/pixelbackground.jpg"))
 	{
 		std::cout << "could not load background file.";
@@ -24,26 +24,55 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	{
 		std::cout << "butterfly sprite sheet failed to load.";
 	}
-	butterfly.setSize(sf::Vector2f(70, 58));
+	
 	butterfly.setPosition((window->getSize().x / 4) - 35, (window->getSize().y / 3));
 	butterfly.setTexture(&butterflyTexture);
-	butterfly.setVelocity(10.f, 10.f);
+	butterfly.setVelocity(0, 10.f);
 	butterfly.setInput(input);
 
-
+	//Obsticles
+	if (!netTexture.loadFromFile("butterfly net/Butterfly net.png"))
+	{
+		std::cout << "could not load net sprite.";
+	}
+	net1.setTexture(&netTexture);
+	net1.setPosition((window->getSize().x) + 65, 300);
 	
-	//Game title
+	net2.setTexture(&netTexture);
+	net2.setPosition((window->getSize().x) + 435, 50);
+
+	net3.setTexture(&netTexture);
+	net3.setPosition((window->getSize().x) + 810, 350);
+
+	net4.setTexture(&netTexture);
+	net4.setPosition((window->getSize().x) + 1185, 550);
+
+	speed = 100.f;
+	
+
+
+
+	//Loading Font file
 	if (!font.loadFromFile("font/arial.ttf"))
 	{
 		std::cout << "failure to load font file" << std::endl;
 	}
-
+	//Game Title
 	game_title.setFont(font);
 	game_title.setString("A Shameless Copy");
 	game_title.setCharacterSize(30);
 	game_title.setFillColor(sf::Color::Black);
 	game_title.setStyle(sf::Text::Bold);
-	game_title.setPosition(475, 0);
+	game_title.setPosition(0, 0);
+	//Instructions
+
+	instructions.setFont(font);
+	instructions.setString("Press Enter to flap\nAvoid those nets!");
+	instructions.setCharacterSize(20);
+	instructions.setFillColor(sf::Color::Black);
+	instructions.setPosition(0, 35);
+
+	//score
 
 }
 
@@ -63,6 +92,7 @@ void Level::handleInput(float dt)
 	{
 		window->close();
 	}
+	//check for focus
 
 }
 
@@ -78,10 +108,14 @@ void Level::update(float dt)
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
 	butterfly.update(dt);
 	//obsticles
-
-
-
-	
+	net1.move(-speed * dt, 0);
+	net2.move(-speed * dt, 0);
+	net3.move(-speed * dt, 0);
+	net4.move(-speed * dt, 0);
+	net1.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	net2.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	net3.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	net4.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 
 }
 
@@ -92,9 +126,18 @@ void Level::render()
 	//thing to draw go here
 	
 	window->draw(background);
+
 	window->draw(butterfly);
-	
+
+	window->draw(net1);
+	window->draw(net2);
+	window->draw(net3);
+	window->draw(net4);
+
 	window->draw(game_title);
+
+	window->draw(instructions);
+
 	endDraw();
 }
 

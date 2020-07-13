@@ -4,7 +4,7 @@
 #include "Framework/Vector.h"
 #include "Framework/Input.h"
 
-class Butterfly : public GameObject , public Vector , public Input
+class Butterfly : public GameObject , public Vector , public Input , public Animation
 {
 public:
 	Butterfly();
