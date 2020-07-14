@@ -59,10 +59,13 @@ private:
 	float speed{ 0.f };
 	int randYPos{ 0 };
 
-	//Game objects
+	GameObject deathScreen;
 
-	sf::Text game_title;
+	//Text in Window
+
+	sf::Text gameTitle;
 	sf::Text instructions;
+	sf::Text gameOver;
 	sf::Text score;
 	sf::Font font;
 };

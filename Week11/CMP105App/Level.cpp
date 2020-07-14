@@ -54,12 +54,12 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "failure to load font file" << std::endl;
 	}
 	//Game Title
-	game_title.setFont(font);
-	game_title.setString("A Shameless Copy");
-	game_title.setCharacterSize(30);
-	game_title.setFillColor(sf::Color::Black);
-	game_title.setStyle(sf::Text::Bold);
-	game_title.setPosition(0, 0);
+	gameTitle.setFont(font);
+	gameTitle.setString("A Shameless Copy");
+	gameTitle.setCharacterSize(30);
+	gameTitle.setFillColor(sf::Color::Black);
+	gameTitle.setStyle(sf::Text::Bold);
+	gameTitle.setPosition(0, 0);
 	
 	//Instructions
 	instructions.setFont(font);
@@ -67,6 +67,17 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	instructions.setCharacterSize(20);
 	instructions.setFillColor(sf::Color::Black);
 	instructions.setPosition(0, 35);
+
+	//Game Over
+	gameOver.setFont(font);
+	gameOver.setString("GAME OVER!");
+	gameOver.setCharacterSize(20);
+	gameOver.setFillColor(sf::Color::Red);
+
+	//DeathScreen
+
+
+
 
 	//score
 
@@ -97,9 +108,13 @@ void Level::update(float dt)
 	sf::Vector2u pos = window->getSize();
 
 	//update sprite sizes to fit in new window
+	
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
+	
+	deathScreen.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12.f, window->getSize().y / 6.75));
+	butterfly.setPosition((window->getSize().x / 4.f) - 35.f, (window->getSize().y / 3.f));
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -133,14 +148,7 @@ void Level::update(float dt)
 	{
 		if (Collision::checkBoundingBox(&butterfly, &net[i]))
 		{
-			std::cout << "collision!!";
 			butterfly.collisionResponse(NULL);
-			for (int i = 0; i < 6; i++)
-			{
-			net[i].setPosition(net[i].getPosition().x, net[i].getPosition().y);
-			speed = 0.f;
-			}
-
 		}
 	}
 
@@ -161,9 +169,13 @@ void Level::render()
 		window->draw(net[i]);
 	}
 
-	window->draw(game_title);
+	window->draw(gameTitle);
 
 	window->draw(instructions);
+
+
+
+	
 
 	endDraw();
 }
