@@ -17,7 +17,7 @@ public:
 	// register input and change position
 	void handleInput(float dt);
 	
-	//sf::RenderWindow* window;
+	void collisionResponse(GameObject*);
 
 protected:
 	

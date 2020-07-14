@@ -1,19 +1,26 @@
 #pragma once
 
 #include <SFML/Graphics.hpp>
-#include "Framework/Input.h"
-#include "Framework/AudioManager.h"
-#include "Framework/GameState.h"
-#include "Framework/GameObject.h"
-#include "Framework/Vector.h"
-#include <string>
 #include <iostream>
-#include "Butterfly.h"
-#include "Net.h"
-
+#include <string>
 #include <stdio.h>
 #include <stdlib.h>
 #include <time.h>
+
+#include "Framework/Input.h"
+#include "Framework/Vector.h"
+#include "Framework/GameObject.h"
+#include "Framework/Collision.h"
+
+#include "Framework/GameState.h"
+#include "Framework/AudioManager.h"
+
+
+#include "Butterfly.h"
+#include "Net.h"
+
+
+
 
 class Level{
 public:
@@ -53,8 +60,8 @@ private:
 	GameObject net5;
 	GameObject net6;
 	sf::Texture netTexture;
-	float speed;
-	int randYPos;
+	float speed{ 0.f };
+	int randYPos{ 0 };
 	//Game objects
 
 	sf::Text game_title;

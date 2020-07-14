@@ -58,6 +58,8 @@ void Butterfly::handleInput(float dt)
 }
 
 
+
+
 void Butterfly::update(float dt)
 {
 	//******All gravity stuff******
@@ -104,7 +106,15 @@ void Butterfly::update(float dt)
 	}
 
 }
+void Butterfly::collisionResponse(GameObject*)
+{
+	stepVelocity = sf::Vector2f(0 , 0);
+	gravity = sf::Vector2f(0 , 0);
+	jumpVector = sf::Vector2f(0 , 0);
+	isJumping = false;
+	
 
+}
 
 
 

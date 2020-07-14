@@ -26,6 +26,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	}
 	
 	butterfly.setPosition((window->getSize().x / 4) - 35, (window->getSize().y / 3));
+	butterfly.setCollisionBox(sf::FloatRect(20, 20, 60, 60));
 	butterfly.setTexture(&butterflyTexture);
 	butterfly.setInput(input);
 
@@ -35,21 +36,27 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "could not load net sprite.";
 	}
 	net1.setTexture(&netTexture);
+	net1.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net1.setPosition((window->getSize().x) + 65, 300);
 	
 	net2.setTexture(&netTexture);
+	net2.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net2.setPosition((window->getSize().x) + 315, 50);
 
 	net3.setTexture(&netTexture);
+	net3.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net3.setPosition((window->getSize().x) + 540, 200);
 
 	net4.setTexture(&netTexture);
+	net4.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net4.setPosition((window->getSize().x) + 785, 500);
 
 	net5.setTexture(&netTexture);
+	net5.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net5.setPosition((window->getSize().x) + 1020, 100);
 
 	net6.setTexture(&netTexture);
+	net6.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
 	net6.setPosition((window->getSize().x) + 1255, 400);
 
 
@@ -98,33 +105,33 @@ void Level::handleInput(float dt)
 // Update game objects
 void Level::update(float dt)
 {
-	//update positions 
+	//update window size 
 	sf::Vector2u pos = window->getSize();
-	//background
+	//update sprite sizes to fit in new window
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	//butterfly
-	
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
-	butterfly.update(dt);
-	//obsticles
-	
-	speed = 500.f;
-	net1.move(-speed * dt, 0);
-	net2.move(-speed * dt, 0);
-	net3.move(-speed * dt, 0);
-	net4.move(-speed * dt, 0);
-	net5.move(-speed * dt, 0);
-	net6.move(-speed * dt, 0);
 	net1.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net2.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net3.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net4.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net5.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
 	net6.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	//ceating random numbwer bwtewwn y axis boundaries to randomise the position of the different nets
-	//srand(time(NULL));
-	randYPos = rand() % (window->getSize().y - 170) + 30;
+	
+	//Butterfly.cpp update file
+	butterfly.update(dt);
 
+	//net speeds
+	speed = 100.f;
+	net1.move(-speed * dt, 0);
+	net2.move(-speed * dt, 0);
+	net3.move(-speed * dt, 0);
+	net4.move(-speed * dt, 0);
+	net5.move(-speed * dt, 0);
+	net6.move(-speed * dt, 0);
+
+	//creating random number between y axis boundaries to randomise the position of the different nets
+	randYPos = rand() % (window->getSize().y - 170) + 30;
+	//if statements to loop nets endlessly 
 	if (net1.getPosition().x < -160)
 	{
 		net1.setPosition(window->getSize().x + 65, randYPos);
@@ -149,12 +156,43 @@ void Level::update(float dt)
 	{
 		net6.setPosition(window->getSize().x + 65, randYPos);
 	}
-
-
-
-
-
-
+	//Checking collisions
+	if (Collision::checkBoundingBox(&butterfly, &net1))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		net1.move(0, 0);
+	}
+	if (Collision::checkBoundingBox(&butterfly, &net2))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		speed = 0.f;
+	}
+	if (Collision::checkBoundingBox(&butterfly, &net3))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		speed = 0.f;
+	}
+	if (Collision::checkBoundingBox(&butterfly, &net4))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		speed = 0.f;
+	}
+	if (Collision::checkBoundingBox(&butterfly, &net5))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		speed = 0.f;
+	}
+	if (Collision::checkBoundingBox(&butterfly, &net6))
+	{
+		std::cout << "collision!!";
+		butterfly.collisionResponse(NULL);
+		speed = 0.f;
+	}
 
 }
 
