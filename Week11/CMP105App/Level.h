@@ -11,13 +11,14 @@
 #include "Framework/Vector.h"
 #include "Framework/GameObject.h"
 #include "Framework/Collision.h"
+#include "Butterfly.h"
+
 
 #include "Framework/GameState.h"
 #include "Framework/AudioManager.h"
 
 
-#include "Butterfly.h"
-#include "Net.h"
+
 
 
 
@@ -53,15 +54,11 @@ private:
 	Butterfly butterfly;
 	sf::Texture butterflyTexture;
 
-	GameObject net1;
-	GameObject net2;
-	GameObject net3;
-	GameObject net4;
-	GameObject net5;
-	GameObject net6;
+	GameObject net[6];
 	sf::Texture netTexture;
 	float speed{ 0.f };
 	int randYPos{ 0 };
+
 	//Game objects
 
 	sf::Text game_title;

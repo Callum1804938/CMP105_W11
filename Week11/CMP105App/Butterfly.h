@@ -34,7 +34,7 @@ protected:
 	Animation flap;
 	Animation* currentAnimation;
 
-	//Hitbox
+	
 
 	
 	

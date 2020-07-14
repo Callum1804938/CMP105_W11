@@ -25,39 +25,27 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 		std::cout << "butterfly sprite sheet failed to load.";
 	}
 	
-	butterfly.setPosition((window->getSize().x / 4) - 35, (window->getSize().y / 3));
+	butterfly.setPosition((window->getSize().x / 4.f) - 35.f, (window->getSize().y / 3.f));
 	butterfly.setCollisionBox(sf::FloatRect(20, 20, 60, 60));
 	butterfly.setTexture(&butterflyTexture);
 	butterfly.setInput(input);
 
-	//Obsticles
+	//Net Object
 	if (!netTexture.loadFromFile("butterfly net/Butterfly net.png"))
 	{
 		std::cout << "could not load net sprite.";
 	}
-	net1.setTexture(&netTexture);
-	net1.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net1.setPosition((window->getSize().x) + 65, 300);
-	
-	net2.setTexture(&netTexture);
-	net2.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net2.setPosition((window->getSize().x) + 315, 50);
-
-	net3.setTexture(&netTexture);
-	net3.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net3.setPosition((window->getSize().x) + 540, 200);
-
-	net4.setTexture(&netTexture);
-	net4.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net4.setPosition((window->getSize().x) + 785, 500);
-
-	net5.setTexture(&netTexture);
-	net5.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net5.setPosition((window->getSize().x) + 1020, 100);
-
-	net6.setTexture(&netTexture);
-	net6.setCollisionBox(sf::FloatRect(5, 0, 25, 160));
-	net6.setPosition((window->getSize().x) + 1255, 400);
+	for (int i = 0; i < 6; i++)
+	{
+		net[i].setTexture(&netTexture);
+		net[i].setCollisionBox(sf::FloatRect(12, 0, 25, 160));
+	}
+	net[0].setPosition((window->getSize().x) + 65.f, 300);
+	net[1].setPosition((window->getSize().x) + 315.f, 50);
+	net[2].setPosition((window->getSize().x) + 540.f, 200);
+	net[3].setPosition((window->getSize().x) + 785.f, 500);
+	net[4].setPosition((window->getSize().x) + 1020.f, 100);
+	net[5].setPosition((window->getSize().x) + 1255.f, 400);
 
 
 	//Loading Font file
@@ -107,91 +95,53 @@ void Level::update(float dt)
 {
 	//update window size 
 	sf::Vector2u pos = window->getSize();
+
 	//update sprite sizes to fit in new window
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	butterfly.setSize(sf::Vector2f(window->getSize().x / 12, window->getSize().y / 6.75));
-	net1.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	net2.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	net3.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	net4.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	net5.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
-	net6.setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+
+	butterfly.setSize(sf::Vector2f(window->getSize().x / 12.f, window->getSize().y / 6.75));
+
+	for (int i = 0; i < 6; i++)
+	{
+		net[i].setSize(sf::Vector2f(window->getSize().x / 7.5, window->getSize().y / 4.2));
+	}
 	
 	//Butterfly.cpp update file
 	butterfly.update(dt);
 
-	//net speeds
-	speed = 100.f;
-	net1.move(-speed * dt, 0);
-	net2.move(-speed * dt, 0);
-	net3.move(-speed * dt, 0);
-	net4.move(-speed * dt, 0);
-	net5.move(-speed * dt, 0);
-	net6.move(-speed * dt, 0);
-
 	//creating random number between y axis boundaries to randomise the position of the different nets
 	randYPos = rand() % (window->getSize().y - 170) + 30;
-	//if statements to loop nets endlessly 
-	if (net1.getPosition().x < -160)
+	//Loop the nets across the screen
+	for (int i = 0; i < 6; i++)
 	{
-		net1.setPosition(window->getSize().x + 65, randYPos);
+		if (net[i].getPosition().x < -160)
+		{
+			net[i].setPosition(window->getSize().x + 65, randYPos);
+		}
 	}
-	if (net2.getPosition().x < -160)
+
+	//net speeds
+	speed = 100.f;
+	for (int i = 0; i < 6; i++)
 	{
-		net2.setPosition(window->getSize().x + 65, randYPos);
+		net[i].move(-speed * dt, 0);
 	}
-	if (net3.getPosition().x < -160)
-	{
-		net3.setPosition(window->getSize().x + 65, randYPos);
-	}
-	if (net4.getPosition().x < -160)
-	{
-		net4.setPosition(window->getSize().x + 65, randYPos);
-	}
-	if (net5.getPosition().x < -160)
-	{
-		net5.setPosition(window->getSize().x + 65, randYPos);
-	}
-	if (net6.getPosition().x < -160)
-	{
-		net6.setPosition(window->getSize().x + 65, randYPos);
-	}
+
+
 	//Checking collisions
-	if (Collision::checkBoundingBox(&butterfly, &net1))
+	for (int i = 0; i < 6; i++)
 	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		net1.move(0, 0);
-	}
-	if (Collision::checkBoundingBox(&butterfly, &net2))
-	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		speed = 0.f;
-	}
-	if (Collision::checkBoundingBox(&butterfly, &net3))
-	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		speed = 0.f;
-	}
-	if (Collision::checkBoundingBox(&butterfly, &net4))
-	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		speed = 0.f;
-	}
-	if (Collision::checkBoundingBox(&butterfly, &net5))
-	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		speed = 0.f;
-	}
-	if (Collision::checkBoundingBox(&butterfly, &net6))
-	{
-		std::cout << "collision!!";
-		butterfly.collisionResponse(NULL);
-		speed = 0.f;
+		if (Collision::checkBoundingBox(&butterfly, &net[i]))
+		{
+			std::cout << "collision!!";
+			butterfly.collisionResponse(NULL);
+			for (int i = 0; i < 6; i++)
+			{
+			net[i].setPosition(net[i].getPosition().x, net[i].getPosition().y);
+			speed = 0.f;
+			}
+
+		}
 	}
 
 }
@@ -206,12 +156,10 @@ void Level::render()
 
 	window->draw(butterfly);
 
-	window->draw(net1);
-	window->draw(net2);
-	window->draw(net3);
-	window->draw(net4);
-	window->draw(net5);
-	window->draw(net6);
+	for (int i = 0; i < 6; i++)
+	{
+		window->draw(net[i]);
+	}
 
 	window->draw(game_title);
 
