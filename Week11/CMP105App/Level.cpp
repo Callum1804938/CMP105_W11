@@ -11,7 +11,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	audio->addMusic("sfx/cantina.ogg", "cantina");
 
 	//Adding background
-	if (!backgroundTexture.loadFromFile("background/pixelbackground.jpg"))
+	if (!backgroundTexture.loadFromFile("gfx/pixelbackground.jpg"))
 	{
 		std::cout << "could not load background file.";
 	}
@@ -20,7 +20,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 
 
 	//Butterfly Object
-	if (!butterflyTexture.loadFromFile("butterfly/butterfly side sprite strip.png"))
+	if (!butterflyTexture.loadFromFile("gfx/butterfly side sprite strip.png"))
 	{
 		std::cout << "butterfly sprite sheet failed to load.";
 	}
@@ -31,7 +31,7 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	butterfly.setInput(input);
 
 	//Net Object
-	if (!netTexture.loadFromFile("butterfly net/Butterfly net.png"))
+	if (!netTexture.loadFromFile("gfx/Butterfly net.png"))
 	{
 		std::cout << "could not load net sprite.";
 	}
