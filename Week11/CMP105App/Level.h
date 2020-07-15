@@ -8,14 +8,14 @@
 #include <time.h>
 
 #include "Framework/Input.h"
-#include "Framework/Vector.h"
-#include "Framework/GameObject.h"
-#include "Framework/Collision.h"
-#include "Butterfly.h"
-
-
 #include "Framework/GameState.h"
 #include "Framework/AudioManager.h"
+
+#include "Framework/Collision.h"
+#include "Butterfly.h"
+#include "Framework/Vector.h"
+#include "Framework/GameObject.h"
+
 
 
 
