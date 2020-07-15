@@ -53,6 +53,9 @@ private:
 
 	Butterfly butterfly;
 	sf::Texture butterflyTexture;
+	
+
+
 
 	GameObject net[6];
 	sf::Texture netTexture;

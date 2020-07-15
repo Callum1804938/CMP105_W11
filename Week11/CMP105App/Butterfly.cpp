@@ -70,20 +70,20 @@ void Butterfly::update(float dt)
 	setPosition(getPosition() + pos);
 
 	//******Setting borders for butterfly****** 
-	if (getPosition().y < -30)
-	{
-		
-		setPosition(getPosition().x, -30);
-		stepVelocity = sf::Vector2f(0, 0);
-	}
+	//if (getPosition().y < -30)
+	//{
+	//	
+	//	setPosition(getPosition().x, -30);
+	//	stepVelocity = sf::Vector2f(0, 0);
+	//}
 
-	if (getPosition().y >= 605)
-	{
-		
-		setPosition(getPosition().x, 605);
-		stepVelocity = sf::Vector2f(0, 0);
+	//if (getPosition().y >= 605)
+	//{
+	//	
+	//	setPosition(getPosition().x, 605);
+	//	stepVelocity = sf::Vector2f(0, 0);
 
-	}
+	//}
 
 	//******Setting animation to keyboard input******
 	currentAnimation->animate(dt);

@@ -18,13 +18,13 @@ public:
 	void handleInput(float dt);
 	
 	void collisionResponse(GameObject*);
-
+	sf::Vector2f stepVelocity;
 protected:
 	
 	float scale;
 	bool isJumping;
 	sf::Vector2f gravity;
-	sf::Vector2f stepVelocity;
+
 	sf::Vector2f jumpVector;
 
 

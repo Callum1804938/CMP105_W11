@@ -114,7 +114,8 @@ void Level::update(float dt)
 	deathScreen.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12.f, window->getSize().y / 6.75));
-	butterfly.setPosition((window->getSize().x / 4.f) - 35.f, (window->getSize().y / 3.f));
+
+
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -123,6 +124,31 @@ void Level::update(float dt)
 	
 	//Butterfly.cpp update file
 	butterfly.update(dt);
+
+
+	//setting boundaries for butterfly
+	
+	if (butterfly.getPosition().y <  - 30)
+	{
+
+		butterfly.setPosition(butterfly.getPosition().x,  - 30);
+		butterfly.stepVelocity = sf::Vector2f(0, 0);
+	}
+
+	if (butterfly.getPosition().y >= (window->getSize().y - 70))
+	{
+
+		butterfly.setPosition(butterfly.getPosition().x, (window->getSize().y - 70));
+		butterfly.stepVelocity = sf::Vector2f(0, 0);
+
+	}
+
+	//net speeds
+	speed = 250.f;
+	for (int i = 0; i < 6; i++)
+	{
+		net[i].move(-speed * dt, 0);
+	}
 
 	//creating random number between y axis boundaries to randomise the position of the different nets
 	randYPos = rand() % (window->getSize().y - 170) + 30;
@@ -135,12 +161,6 @@ void Level::update(float dt)
 		}
 	}
 
-	//net speeds
-	speed = 100.f;
-	for (int i = 0; i < 6; i++)
-	{
-		net[i].move(-speed * dt, 0);
-	}
 
 
 	//Checking collisions
