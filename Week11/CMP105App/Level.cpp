@@ -8,7 +8,16 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	audio = aud;
 
 	// initialise game objects
-	audio->addMusic("sfx/cantina.ogg", "cantina");
+
+	//adding music
+	audio->addMusic("sfx/mysticalWoods.ogg", "mystical");
+	audio->addSound("sfx/jump sound.wav", "jump");
+	buffer.loadFromFile("sfx/jump sounds.wav");
+	sound.setBuffer(buffer);
+
+	music.openFromFile("sfx/mysticalWoods.ogg");
+	musicPlaying = false;
+
 
 	//Adding background
 	if (!backgroundTexture.loadFromFile("gfx/pixelbackground.jpg"))
@@ -48,39 +57,6 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	net[5].setPosition((window->getSize().x) + 1255.f, 400);
 
 
-	//Loading Font file
-	if (!font.loadFromFile("font/arial.ttf"))
-	{
-		std::cout << "failure to load font file" << std::endl;
-	}
-	//Game Title
-	gameTitle.setFont(font);
-	gameTitle.setString("A Shameless Copy");
-	gameTitle.setCharacterSize(30);
-	gameTitle.setFillColor(sf::Color::Black);
-	gameTitle.setStyle(sf::Text::Bold);
-	gameTitle.setPosition(0, 0);
-	
-	//Instructions
-	instructions.setFont(font);
-	instructions.setString("Press Enter to flap\nAvoid those nets!");
-	instructions.setCharacterSize(20);
-	instructions.setFillColor(sf::Color::Black);
-	instructions.setPosition(0, 35);
-
-	//Game Over
-	gameOver.setFont(font);
-	gameOver.setString("GAME OVER!");
-	gameOver.setCharacterSize(20);
-	gameOver.setFillColor(sf::Color::Red);
-
-	//DeathScreen
-
-
-
-
-	//score
-
 }
 
 Level::~Level()
@@ -98,6 +74,12 @@ void Level::handleInput(float dt)
 	{
 		window->close();
 	}
+	//input to pause game
+	if (input->isKeyDown(sf::Keyboard::P))
+	{
+		gameState->setCurrentState(State::PAUSE);
+		input->setKeyUp(sf::Keyboard::P);
+	}
 
 }
 
@@ -110,12 +92,8 @@ void Level::update(float dt)
 	//update sprite sizes to fit in new window
 	
 	background.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
-	
-	deathScreen.setSize(sf::Vector2f(window->getSize().x, window->getSize().y));
 
 	butterfly.setSize(sf::Vector2f(window->getSize().x / 12.f, window->getSize().y / 6.75));
-
-
 
 	for (int i = 0; i < 6; i++)
 	{
@@ -124,27 +102,21 @@ void Level::update(float dt)
 	
 	//Butterfly.cpp update file
 	butterfly.update(dt);
-
-
 	//setting boundaries for butterfly
 	
-	if (butterfly.getPosition().y <  - 30)
+	if (butterfly.getPosition().y <  - 50)
 	{
-
-		butterfly.setPosition(butterfly.getPosition().x,  - 30);
-		butterfly.stepVelocity = sf::Vector2f(0, 0);
+		gameState->setCurrentState(State::DEATH);
 	}
 
 	if (butterfly.getPosition().y >= (window->getSize().y - 70))
 	{
-
-		butterfly.setPosition(butterfly.getPosition().x, (window->getSize().y - 70));
-		butterfly.stepVelocity = sf::Vector2f(0, 0);
-
+		gameState->setCurrentState(State::DEATH);
 	}
 
+
 	//net speeds
-	speed = 250.f;
+	speed = window-> getSize().x/5.f;
 	for (int i = 0; i < 6; i++)
 	{
 		net[i].move(-speed * dt, 0);
@@ -162,13 +134,12 @@ void Level::update(float dt)
 	}
 
 
-
 	//Checking collisions
 	for (int i = 0; i < 6; i++)
 	{
 		if (Collision::checkBoundingBox(&butterfly, &net[i]))
 		{
-			butterfly.collisionResponse(NULL);
+			gameState->setCurrentState(State::DEATH);
 		}
 	}
 
@@ -189,23 +160,19 @@ void Level::render()
 		window->draw(net[i]);
 	}
 
-	window->draw(gameTitle);
-
-	window->draw(instructions);
-
-
-
-	
-
 	endDraw();
 }
 
-// Begins rendering to the back buffer. Background colour set to light blue.
+// Begins rendering to the back buffer. Background colour set to black.
 void Level::beginDraw()
 {
-	window->clear(sf::Color::Black);
+	switch (gameState->getCurrentState())
+	{
+	case(State::LEVEL):
+		window->clear(sf::Color::Black);
+		break;
+	}
 }
-
 // Ends rendering to the back buffer, and swaps buffer to the screen.
 void Level::endDraw()
 {

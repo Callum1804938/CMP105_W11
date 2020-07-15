@@ -52,7 +52,7 @@ void Butterfly::handleInput(float dt)
 		{
 			//when space is pressed replaces gravity value with jump value
 			stepVelocity = jumpVector;
-			   
+		
 		}
 	}
 }
@@ -69,21 +69,7 @@ void Butterfly::update(float dt)
 	sf::Vector2f pos = stepVelocity * dt + 0.5f * gravity * dt * dt;
 	setPosition(getPosition() + pos);
 
-	//******Setting borders for butterfly****** 
-	//if (getPosition().y < -30)
-	//{
-	//	
-	//	setPosition(getPosition().x, -30);
-	//	stepVelocity = sf::Vector2f(0, 0);
-	//}
 
-	//if (getPosition().y >= 605)
-	//{
-	//	
-	//	setPosition(getPosition().x, 605);
-	//	stepVelocity = sf::Vector2f(0, 0);
-
-	//}
 
 	//******Setting animation to keyboard input******
 	currentAnimation->animate(dt);
@@ -106,15 +92,7 @@ void Butterfly::update(float dt)
 	}
 
 }
-void Butterfly::collisionResponse(GameObject*)
-{
-	stepVelocity = sf::Vector2f(0 , 0);
-	gravity = sf::Vector2f(0 , 0);
-	jumpVector = sf::Vector2f(0 , 0);
-	isJumping = false;
-	
 
-}
 
 
 

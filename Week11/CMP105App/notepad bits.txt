@@ -1,9 +1,0 @@
-butterfly handleInput changes
-
-	if (input->isKeyDown(sf::Keyboard::Space))
-	{
-		move(sf::Vector2f(0, -velocity.y) * dt);
-	}
-
-
-

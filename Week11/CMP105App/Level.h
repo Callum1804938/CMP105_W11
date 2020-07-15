@@ -54,21 +54,19 @@ private:
 	Butterfly butterfly;
 	sf::Texture butterflyTexture;
 	
-
-
-
 	GameObject net[6];
 	sf::Texture netTexture;
 	float speed{ 0.f };
 	int randYPos{ 0 };
 
-	GameObject deathScreen;
+	//Music and sounds 
+	bool musicPlaying;
+	sf::Sound sound;
+	sf::SoundBuffer buffer;
+	sf::Music music;
 
-	//Text in Window
 
-	sf::Text gameTitle;
-	sf::Text instructions;
-	sf::Text gameOver;
-	sf::Text score;
-	sf::Font font;
+
+
+
 };

@@ -1,6 +1,7 @@
 #pragma once
-#include "Framework/GameObject.h"
 #include "Framework/Animation.h"
+#include "Framework/GameObject.h"
+#include "Framework/GameState.h"
 #include "Framework/Vector.h"
 #include "Framework/Input.h"
 
@@ -17,7 +18,7 @@ public:
 	// register input and change position
 	void handleInput(float dt);
 	
-	void collisionResponse(GameObject*);
+
 	sf::Vector2f stepVelocity;
 protected:
 	
