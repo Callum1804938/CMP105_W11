@@ -7,17 +7,14 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	gameState = gs;
 	audio = aud;
 
+
 	// initialise game objects
 
-	//adding music
+	//Adding music
 	audio->addMusic("sfx/mysticalWoods.ogg", "mystical");
-	audio->addSound("sfx/jump sound.wav", "jump");
-	buffer.loadFromFile("sfx/jump sounds.wav");
-	sound.setBuffer(buffer);
-
-	music.openFromFile("sfx/mysticalWoods.ogg");
-	musicPlaying = false;
-
+	audio->addSound("sfx/wing flaps.ogg", "flap");
+	audio->addSound("sfx/caught.ogg", "caught");
+	audio->addSound("sfx/boundaryDeath.wav", "boundary");
 
 	//Adding background
 	if (!backgroundTexture.loadFromFile("gfx/pixelbackground.jpg"))
@@ -56,7 +53,8 @@ Level::Level(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	net[4].setPosition((window->getSize().x) + 1020.f, 100);
 	net[5].setPosition((window->getSize().x) + 1255.f, 400);
 
-
+	//Score 
+	
 }
 
 Level::~Level()
@@ -73,14 +71,23 @@ void Level::handleInput(float dt)
 	if (input->isKeyDown(sf::Keyboard::Escape))
 	{
 		window->close();
+
 	}
 	//input to pause game
 	if (input->isKeyDown(sf::Keyboard::P))
 	{
+		audio->stopAllMusic();
 		gameState->setCurrentState(State::PAUSE);
 		input->setKeyUp(sf::Keyboard::P);
+	
 	}
+	//Adding jump sound to space key
+	if (input->isKeyDown(sf::Keyboard::Space))
+	{
+		audio->playSoundbyName("flap");
+		
 
+	}
 }
 
 // Update game objects
@@ -102,21 +109,27 @@ void Level::update(float dt)
 	
 	//Butterfly.cpp update file
 	butterfly.update(dt);
-	//setting boundaries for butterfly
+	//setting boundaries for butterfly to cause death
 	
-	if (butterfly.getPosition().y <  - 50)
+	if (butterfly.getPosition().y < -60)
 	{
+		audio->playSoundbyName("boundary");
 		gameState->setCurrentState(State::DEATH);
+		audio->stopAllMusic();
+		
 	}
 
 	if (butterfly.getPosition().y >= (window->getSize().y - 70))
 	{
+		audio->playSoundbyName("boundary");
 		gameState->setCurrentState(State::DEATH);
+		audio->stopAllMusic();
+
 	}
 
 
 	//net speeds
-	speed = window-> getSize().x/5.f;
+	speed = window-> getSize().x/5.f;//formula to ensure speed moved at correct speed if window changes size
 	for (int i = 0; i < 6; i++)
 	{
 		net[i].move(-speed * dt, 0);
@@ -134,15 +147,22 @@ void Level::update(float dt)
 	}
 
 
-	//Checking collisions
+	//Checking butterfly-net collisions
 	for (int i = 0; i < 6; i++)
 	{
 		if (Collision::checkBoundingBox(&butterfly, &net[i]))
 		{
+			audio->playSoundbyName("caught");
 			gameState->setCurrentState(State::DEATH);
+			audio->stopAllMusic();
+			
 		}
 	}
-
+	//Adding music to game
+	if (audio->getMusic()->getStatus() == sf::SoundSource::Stopped && gameState->getCurrentState() != State::PAUSE)
+	{
+		audio->playMusicbyName("mystical");
+	}
 }
 
 // Render level

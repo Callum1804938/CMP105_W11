@@ -5,7 +5,7 @@ Menu::Menu(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud)
 	window = hwnd;
 	input = in;
 	gameState = gs;
-
+	audio = aud;
 
 	if (!backgroundTexture.loadFromFile("gfx/pixelbackground.jpg"))
 	{

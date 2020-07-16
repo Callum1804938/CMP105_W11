@@ -10,13 +10,11 @@
 #include "Framework/Input.h"
 #include "Framework/GameState.h"
 #include "Framework/AudioManager.h"
-
 #include "Framework/Collision.h"
-#include "Butterfly.h"
 #include "Framework/Vector.h"
 #include "Framework/GameObject.h"
 
-
+#include "Butterfly.h"
 
 
 
@@ -59,13 +57,8 @@ private:
 	float speed{ 0.f };
 	int randYPos{ 0 };
 
-	//Music and sounds 
-	bool musicPlaying;
-	sf::Sound sound;
-	sf::SoundBuffer buffer;
-	sf::Music music;
-
-
+	//Score
+	int timer{ 0 };
 
 
 

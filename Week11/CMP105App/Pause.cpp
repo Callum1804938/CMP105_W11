@@ -1,11 +1,11 @@
 #include "Pause.h"
 
-Pause::Pause(sf::RenderWindow* hwnd, Input* in, GameState* gs)
+Pause::Pause(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud)
 {
 	window = hwnd;
 	input = in;
 	gameState = gs;
-
+	audio = aud;
 
 }
 
@@ -17,6 +17,7 @@ void Pause::pauseGame()
 void Pause::resumeGame()
 {
 	gameState->setCurrentState(State::LEVEL);
+
 }
 
 void Pause::handleInput()

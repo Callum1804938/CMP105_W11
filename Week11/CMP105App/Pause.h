@@ -4,10 +4,11 @@
 #include "Framework/GameObject.h"
 #include "Framework/GameState.h"
 
+
 class Pause
 {
 public:
-	Pause(sf::RenderWindow* hwnd, Input* in, GameState* gs);
+	Pause(sf::RenderWindow* hwnd, Input* in, GameState* gs,AudioManager* aud);
 	void pauseGame();
 	void resumeGame();
 	void handleInput();
@@ -19,6 +20,8 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 	GameState* gameState;
+	AudioManager* audio;
+
 	//**************************************************
 };
 

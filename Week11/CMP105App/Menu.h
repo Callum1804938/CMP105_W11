@@ -23,6 +23,7 @@ private:
 	sf::RenderWindow* window;
 	Input* input;
 	GameState* gameState;
+	AudioManager* audio;
 	//*****************************************************************
 
 	GameObject background;

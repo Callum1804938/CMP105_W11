@@ -52,8 +52,9 @@ void Butterfly::handleInput(float dt)
 		{
 			//when space is pressed replaces gravity value with jump value
 			stepVelocity = jumpVector;
-		
+			
 		}
+		//input->setKeyUp(sf::Keyboard::Space);
 	}
 }
 

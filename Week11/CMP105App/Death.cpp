@@ -43,7 +43,7 @@ Death::Death(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 	caught.setStyle(sf::Text::Bold);
 
 	instructions.setFont(font);
-	instructions.setString("Press 'Enter' to play again\nPress 'Esc' to quit the game");
+	instructions.setString("Press 'Esc' to quit the game");
 	instructions.setCharacterSize(20);
 	instructions.setFillColor(sf::Color::Black);
 
@@ -51,7 +51,7 @@ Death::Death(sf::RenderWindow* hwnd, Input* in, GameState* gs, AudioManager* aud
 
 void Death::startGame()
 {
-	gameState->setCurrentState(State::LEVEL);
+	gameState->setCurrentState(State::MENU);
 }
 
 void Death::handleInput()
@@ -59,14 +59,15 @@ void Death::handleInput()
 	if (input->isKeyDown(sf::Keyboard::Escape))
 	{
 		window->close();
+		
 
 	}
-	if (input->isKeyDown(sf::Keyboard::Enter))
-	{
-		startGame();
-		
-		
-	}
+	//if (input->isKeyDown(sf::Keyboard::Enter))
+	//{
+	//	startGame();
+	//	
+	//	
+	//}
 }
 
 void Death::update(float dt)
